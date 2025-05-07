@@ -1,0 +1,17 @@
+{
+  "id": "chainsaw-man",
+  "title": "Chainsaw Man",
+  "seasons": [
+    {
+      "id": "chainsaw-man-s1",
+      "title": "Season 1",
+      "episodes": [
+        {
+          "id": "chainsaw-man-s1-e1",
+          "title": "Episode 1",
+          "video": "https://example.com/videos/chainsaw-man-s1-e1.mp4"
+        }
+      ]
+    }
+  ]
+}

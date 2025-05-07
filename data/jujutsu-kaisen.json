@@ -1,1 +1,17 @@
-
+{
+  "id": "jujutsu-kaisen",
+  "title": "Jujutsu Kaisen",
+  "seasons": [
+    {
+      "id": "jujutsu-kaisen-s1",
+      "title": "Season 1",
+      "episodes": [
+        {
+          "id": "jujutsu-kaisen-s1-e1",
+          "title": "Episode 1",
+          "video": "https://example.com/videos/jujutsu-kaisen-s1-e1.mp4"
+        }
+      ]
+    }
+  ]
+}
