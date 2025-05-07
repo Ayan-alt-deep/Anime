@@ -1,0 +1,15 @@
+{
+  "title": "Season 1",
+  "episodes": [
+    {
+      "title": "Episode 1 - Tanjiro",
+      "videoUrl": "https://example.com/video1.mp4",
+      "thumbnail": "https://example.com/thumb1.jpg"
+    },
+    {
+      "title": "Episode 2 - For Myself",
+      "videoUrl": "https://example.com/video2.mp4",
+      "thumbnail": "https://example.com/thumb2.jpg"
+    }
+  ]
+}
