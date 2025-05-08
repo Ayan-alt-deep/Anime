@@ -1,13 +1,13 @@
 {
   "name": "naruto-api",
   "version": "1.0.0",
-  "description": "Naruto Anime Episode API using JSON data",
-  "main": "index.js",
+  "description": "Naruto episode API with video URLs and summaries",
+  "main": "server.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node server.js"
   },
   "dependencies": {
-    "axios": "^1.6.0",
+    "cors": "^2.8.5",
     "express": "^4.18.2"
   }
 }
