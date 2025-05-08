@@ -1,33 +1,43 @@
-const express = require("express");
-const cors = require("cors");
-const animeData = require("./animeData");
+
+import express from 'express';
+import cors from 'cors';
+import fs from 'fs';
 
 const app = express();
+const PORT = process.env.PORT || 3000;
+
 app.use(cors());
 
-// GET /anime
-app.get("/anime", (req, res) => {
-  const list = animeData.map(a => ({ id: a.id, title: a.title }));
-  res.json(list);
+// Load anime data
+const animeData = JSON.parse(fs.readFileSync('./availableAnime.json'));
+const videoData = JSON.parse(fs.readFileSync('./videoUrl.json'));
+
+app.get('/', (req, res) => {
+  res.send('Anime Hindi API is running');
 });
 
-// GET /anime/:id/seasons
-app.get("/anime/:id/seasons", (req, res) => {
-  const anime = animeData.find(a => a.id === req.params.id);
-  if (!anime) return res.status(404).json({ error: "Anime not found" });
-  res.json(anime.seasons.map(s => ({ id: s.id, title: s.title })));
+app.get('/anime', (req, res) => {
+  res.json(animeData);
 });
 
-// GET /anime/:id/seasons/:sid/episodes
-app.get("/anime/:id/seasons/:sid/episodes", (req, res) => {
-  const anime = animeData.find(a => a.id === req.params.id);
-  if (!anime) return res.status(404).json({ error: "Anime not found" });
-
-  const season = anime.seasons.find(s => s.id === req.params.sid);
-  if (!season) return res.status(404).json({ error: "Season not found" });
-
-  res.json(season.episodes);
+app.get('/anime/:name', (req, res) => {
+  const name = decodeURIComponent(req.params.name);
+  const anime = animeData.find(a => a.name.toLowerCase() === name.toLowerCase());
+  if (!anime) return res.status(404).json({ error: 'Anime not found' });
+  res.json(anime);
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server started on ${PORT}`));
+app.get('/video/:anime/:season/:episode', (req, res) => {
+  const { anime, season, episode } = req.params;
+  const video = videoData.find(v =>
+    v.anime.toLowerCase() === anime.toLowerCase() &&
+    v.season == season &&
+    v.episode == episode
+  );
+  if (!video) return res.status(404).json({ error: 'Video not found' });
+  res.json({ url: video.url });
+});
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});

@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Attack on Titan",
+    "description": "Humans vs Titans in a post-apocalyptic world.",
+    "seasons": [
+      {
+        "season": 1,
+        "episodes": [
+          1
+        ]
+      }
+    ]
+  }
+]
