@@ -1,1 +1,22 @@
-
+{
+  "season1": {
+    "episode1": {
+      "videoUrl": "https://i.imgur.com/wV2slRV.mp4",
+      "summary": "Naruto Uzumaki, a mischievous ninja-in-training, struggles for recognition in his village. After failing his graduation exam, he's tricked into stealing a forbidden scroll, leading to a confrontation that reveals his hidden strength and the truth about his past."
+    },
+    "episode2": {
+      "videoUrl": "http://remakeai-production.up.railway.app/Remake_Ai/Nyx_Remake_1746668073505.mp4",
+      "summary": "Naruto is placed in a team with Sasuke and Sakura under Kakashi's guidance. Their first mission sets the stage for the challenges ahead."
+    }
+  },
+  "season2": {
+    "episode1": {
+      "videoUrl": "http://remakeai-production.up.railway.app/Remake_Ai/Nyx_Remake_1746668172065.mp4",
+      "summary": "Team 7 embarks on a mission to the Land of Waves, facing dangerous enemies and learning the true meaning of being a ninja."
+    },
+    "episode2": {
+      "videoUrl": "https://files.catbox.moe/fpeipx.mp4",
+      "summary": "The battle against Zabuza intensifies, pushing Naruto and his teammates to their limits and forging stronger bonds between them."
+    }
+  }
+}
