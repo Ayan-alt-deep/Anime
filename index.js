@@ -1,43 +1,28 @@
 const express = require('express');
 const fs = require('fs');
-const cors = require('cors');
-
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors());
-
 // Load episodes data
-let episodesData;
-try {
-  const data = fs.readFileSync('./naruto_episodes.json', 'utf8');
-  episodesData = JSON.parse(data);
-} catch (err) {
-  console.error('Error reading naruto_episodes.json:', err);
-  episodesData = {};
-}
+const episodesData = JSON.parse(fs.readFileSync('./api/naruto_episodes.json', 'utf8'));
 
-// Route to get episode URL
-app.get('/api/naruto/season/:season/episode/:episode', (req, res) => {
+// API Endpoint for fetching Naruto episodes
+app.get('/api/naruto/:season/:episode', (req, res) => {
   const { season, episode } = req.params;
-  const seasonKey = `season${season}`;
-  const episodeKey = `episode${episode}`;
-
-  if (
-    episodesData[seasonKey] &&
-    episodesData[seasonKey][episodeKey]
-  ) {
-    res.json({ url: episodesData[seasonKey][episodeKey] });
+  const seasonData = episodesData[`season${season}`]; // Example: season1
+  if (seasonData) {
+    const episodeData = seasonData[`episode${episode}`]; // Example: episode1
+    if (episodeData) {
+      res.json(episodeData);
+    } else {
+      res.status(404).json({ error: `Episode ${episode} not found.` });
+    }
   } else {
-    res.status(404).json({ error: 'Episode not found' });
+    res.status(404).json({ error: `Season ${season} not found.` });
   }
 });
 
-// Default route
-app.get('/', (req, res) => {
-  res.send('Naruto API is running');
-});
-
+// Start the server
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(\`Server is running on port \${PORT}\`);
 });
