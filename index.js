@@ -1,48 +1,43 @@
 const express = require('express');
-const cors = require('cors');
-const path = require('path');
 const fs = require('fs');
+const cors = require('cors');
 
 const app = express();
+const PORT = process.env.PORT || 3000;
+
 app.use(cors());
 
-// Path to the local JSON file
-const narutoDataPath = path.join(__dirname, 'data', 'naruto_episodes.json');
+// Load episodes data
+let episodesData;
+try {
+  const data = fs.readFileSync('./naruto_episodes.json', 'utf8');
+  episodesData = JSON.parse(data);
+} catch (err) {
+  console.error('Error reading naruto_episodes.json:', err);
+  episodesData = {};
+}
 
-// Function to load episode data from the local JSON file
-const loadNarutoEpisodes = () => {
-  try {
-    const data = fs.readFileSync(narutoDataPath, 'utf8');
-    return JSON.parse(data);
-  } catch (error) {
-    console.error('Error reading or parsing naruto_episodes.json:', error);
-    return null;
+// Route to get episode URL
+app.get('/api/naruto/season/:season/episode/:episode', (req, res) => {
+  const { season, episode } = req.params;
+  const seasonKey = `season${season}`;
+  const episodeKey = `episode${episode}`;
+
+  if (
+    episodesData[seasonKey] &&
+    episodesData[seasonKey][episodeKey]
+  ) {
+    res.json({ url: episodesData[seasonKey][episodeKey] });
+  } else {
+    res.status(404).json({ error: 'Episode not found' });
   }
-};
-
-// Main Naruto route
-app.get('/naruto', (req, res) => {
-  const { season, episode } = req.query;
-
-  if (!season || !episode) {
-    return res.status(400).json({ error: "Missing season or episode parameter" });
-  }
-
-  const narutoEpisodes = loadNarutoEpisodes();
-  if (!narutoEpisodes) {
-    return res.status(500).json({ error: "Failed to load episode data" });
-  }
-
-  const videoUrl = narutoEpisodes?.[season]?.[episode];
-  if (!videoUrl) {
-    return res.status(404).json({ error: `Episode not found: ${season}E${episode}` });
-  }
-
-  return res.redirect(videoUrl);
 });
 
-// Start server
-const PORT = process.env.PORT || 3000;
+// Default route
+app.get('/', (req, res) => {
+  res.send('Naruto API is running');
+});
+
 app.listen(PORT, () => {
-  console.log(`Naruto API is running on port ${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });
