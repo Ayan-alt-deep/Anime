@@ -1,20 +1,12 @@
 {
   "name": "naruto-api",
   "version": "1.0.0",
-  "engines": {
-    "node": ">=14.x"
-  },
+  "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js"
   },
   "dependencies": {
-    "cors": "^2.8.5",
-    "dotenv": "^16.0.3",
-    "express": "^4.18.2"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.20"
+    "express": "^4.18.2",
+    "cors": "^2.8.5"
   }
 }
