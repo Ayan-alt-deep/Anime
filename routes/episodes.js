@@ -1,34 +1,51 @@
 const express = require('express');
 const router = express.Router();
-const fs = require('fs');
-const path = require('path');
+const narutoData = require('../data/naruto.json');
+const shippudenData = require('../data/shippuden.json');
 
-// ডাটা লোড ফাংশন
-const loadEpisodes = (series) => {
-  try {
-    const dataPath = path.join(__dirname, '../data', `${series}.json`);
-    return JSON.parse(fs.readFileSync(dataPath));
-  } catch (error) {
-    console.error(`Failed to load ${series} data:`, error);
-    return null;
-  }
-};
+// Get all seasons
+router.get('/seasons/:series', (req, res) => {
+  const { series } = req.params;
+  const data = series === 'shippuden' ? shippudenData : narutoData;
+  
+  res.json({
+    success: true,
+    data: {
+      metadata: data.metadata,
+      seasons: Object.keys(data.episodes)
+    }
+  });
+});
 
-// এপিসোড এন্ডপয়েন্ট
-router.get('/:series/season/:season/episode/:episode', (req, res) => {
-  const { series, season, episode } = req.params;
-  const data = loadEpisodes(series);
-
-  if (!data) {
-    return res.status(500).json({ 
+// Get episodes by season
+router.get('/:series/season/:season', (req, res) => {
+  const { series, season } = req.params;
+  const data = series === 'shippuden' ? shippudenData : narutoData;
+  
+  if (!data.episodes[`season${season}`]) {
+    return res.status(404).json({
       success: false,
-      error: 'Internal server error' 
+      error: 'Season not found'
     });
   }
 
-  const episodeData = data.episodes?.[`season${season}`]?.[`episode${episode}`];
+  res.json({
+    success: true,
+    data: {
+      season: season,
+      episodes: data.episodes[`season${season}`]
+    }
+  });
+});
 
-  if (!episodeData?.url) {
+// Get specific episode
+router.get('/:series/season/:season/episode/:episode', (req, res) => {
+  const { series, season, episode } = req.params;
+  const data = series === 'shippuden' ? shippudenData : narutoData;
+  const seasonKey = `season${season}`;
+  const episodeKey = `episode${episode}`;
+
+  if (!data.episodes[seasonKey] || !data.episodes[seasonKey][episodeKey]) {
     return res.status(404).json({
       success: false,
       error: 'Episode not found'
@@ -37,7 +54,7 @@ router.get('/:series/season/:season/episode/:episode', (req, res) => {
 
   res.json({
     success: true,
-    data: episodeData
+    data: data.episodes[seasonKey][episodeKey]
   });
 });
 
