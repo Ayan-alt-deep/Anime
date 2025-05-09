@@ -5,25 +5,23 @@ const episodeRoutes = require('./routes/episodes');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// মিডলওয়্যার
+// Middleware
 app.use(cors());
 app.use(express.json());
 
-// রাউটস
-app.use('/api', episodeRoutes);
+// Routes
+app.use('/api/episodes', episodeRoutes);
 
-// হেলথ চেক
-app.get('/', (req, res) => {
-  res.send('Naruto API is running!');
-});
-
-// এরর হ্যান্ডলিং
+// Error handling
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).json({ error: 'Something broke!' });
+  res.status(500).json({
+    success: false,
+    error: 'Internal Server Error'
+  });
 });
 
-// সার্ভার স্টার্ট
+// Start server
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`Naruto API running on port ${PORT}`);
 });
