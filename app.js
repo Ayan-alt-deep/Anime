@@ -1,8 +1,8 @@
-require('dotenv').config(); // Add this line
+// app.js (মূল ফাইল)
 const express = require('express');
-const cors = require('cors');
+const fs = require('fs');
 const path = require('path');
-const episodeRoutes = require('./routes/episodes');
+const cors = require('cors');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -11,23 +11,56 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-// Routes
-app.use('/api/episodes', episodeRoutes);
+// JSON ডাটা লোড (MongoDB ছাড়া)
+const loadData = (series) => {
+  try {
+    const filePath = path.join(__dirname, 'data', `${series}.json`);
+    return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+  } catch (e) {
+    console.error(`Error loading ${series}.json:`, e);
+    return null;
+  }
+};
 
-// Health check
-app.get('/', (req, res) => {
-  res.send('Naruto API is running');
-});
+// রাউট: সকল সিজন
+app.get('/api/:series/seasons', (req, res) => {
+  const { series } = req.params;
+  const data = loadData(series);
+  
+  if (!data) return res.status(404).json({ error: 'Series not found' });
 
-// Error handling
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({
-    success: false,
-    error: 'Internal Server Error'
+  res.json({
+    success: true,
+    seasons: Object.keys(data.episodes).map(s => s.replace('season', ''))
   });
 });
 
+// রাউট: নির্দিষ্ট এপিসোড
+app.get('/api/:series/season/:season/episode/:episode', (req, res) => {
+  const { series, season, episode } = req.params;
+  const data = loadData(series);
+  const seasonKey = `season${season}`;
+  const episodeKey = `episode${episode}`;
+
+  if (!data?.episodes?.[seasonKey]?.[episodeKey]) {
+    return res.status(404).json({ 
+      success: false,
+      error: 'Episode not found' 
+    });
+  }
+
+  res.json({
+    success: true,
+    data: data.episodes[seasonKey][episodeKey]
+  });
+});
+
+// হেলথ চেক
+app.get('/health', (req, res) => {
+  res.json({ status: 'active', timestamp: new Date() });
+});
+
+// সার্ভার শুরু
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
