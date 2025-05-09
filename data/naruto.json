@@ -1,0 +1,24 @@
+{
+  "metadata": {
+    "title": "Naruto",
+    "total_seasons": 5,
+    "total_episodes": 220,
+    "thumbnail": "http://remakeai-production.up.railway.app/Remake_Ai/Nyx_Remake_1746750218289.jpg"
+  },
+  "episodes": {
+    "season1": {
+      "episode1": {
+        "title": "Enter: Naruto Uzumaki!",
+        "url": "https://example.com/naruto/s1/e1.mp4",
+        "thumbnail": "http://remakeai-production.up.railway.app/Remake_Ai/Nyx_Remake_1746750218289.jpg",
+        "duration": "23:45"
+      },
+      "episode2": {
+        "title": "My Name is Konohamaru!",
+        "url": "http://remakeai-production.up.railway.app/Remake_Ai/Nyx_Remake_1746668073505.mp4",
+        "thumbnail": "http://remakeai-production.up.railway.app/Remake_Ai/Nyx_Remake_1746750218289.jpg",
+        "duration": "23:40"
+      }
+    }
+  }
+}
