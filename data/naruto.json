@@ -1,15 +1,10 @@
 {
-  "metadata": {
-    "title": "Naruto",
-    "total_seasons": 5
+  "season1": {
+    "episode1": "http://remakeai-production.up.railway.app/Remake_Ai/Nyx_Remake_1746694651645.mp4",
+    "episode2": "http://remakeai-production.up.railway.app/Remake_Ai/Nyx_Remake_1746668073505.mp4"
   },
-  "episodes": {
-    "season1": {
-      "episode1": {
-        "title": "Enter: Naruto Uzumaki!",
-        "url": "http://remakeai-production.up.railway.app/Remake_Ai/Nyx_Remake_1746668073505.mp4",
-        "thumbnail": "http://remakeai-production.up.railway.app/Remake_Ai/Nyx_Remake_1746750218289.jpg"
-      }
-    }
+  "season2": {
+    "episode1": "http://remakeai-production.up.railway.app/Remake_Ai/Nyx_Remake_1746668172065.mp4",
+    "episode2": "https://files.catbox.moe/fpeipx.mp4"
   }
 }
