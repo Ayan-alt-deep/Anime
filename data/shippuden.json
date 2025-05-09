@@ -1,0 +1,18 @@
+{
+  "metadata": {
+    "title": "Naruto Shippuden",
+    "total_seasons": 21,
+    "total_episodes": 500,
+    "thumbnail": "http://remakeai-production.up.railway.app/Remake_Ai/Nyx_Remake_1746750218289.jpg"
+  },
+  "episodes": {
+    "season1": {
+      "episode1": {
+        "title": "Homecoming",
+        "url": "http://remakeai-production.up.railway.app/Remake_Ai/Nyx_Remake_1746694651645.mp4",
+        "thumbnail": "http://remakeai-production.up.railway.app/Remake_Ai/Nyx_Remake_1746750218289.jpg",
+        "duration": "23:45"
+      }
+    }
+  }
+}
