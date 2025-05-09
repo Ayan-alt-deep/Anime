@@ -1,5 +1,7 @@
+require('dotenv').config(); // Add this line
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const episodeRoutes = require('./routes/episodes');
 
 const app = express();
@@ -12,6 +14,11 @@ app.use(express.json());
 // Routes
 app.use('/api/episodes', episodeRoutes);
 
+// Health check
+app.get('/', (req, res) => {
+  res.send('Naruto API is running');
+});
+
 // Error handling
 app.use((err, req, res, next) => {
   console.error(err.stack);
@@ -21,7 +28,6 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Start server
 app.listen(PORT, () => {
-  console.log(`Naruto API running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
