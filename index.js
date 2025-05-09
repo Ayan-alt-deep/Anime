@@ -22,6 +22,11 @@ app.get('/api/naruto/:season/:episode', (req, res) => {
   }
 });
 
+// Health check endpoint for Render
+app.get('/', (req, res) => {
+  res.sendStatus(200);
+});
+
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
